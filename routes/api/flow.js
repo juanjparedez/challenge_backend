@@ -1,5 +1,3 @@
-const { route } = require('../api')
-
 const router = require('express').Router()
 
 const { Transaction } = require('../../db')
@@ -21,26 +19,41 @@ router.post('/', async (req, res) => {
 	if (req.body.category != 'Income') {
 		req.body.amount = -req.body.amount
 	}
-	const transaction = await Transaction.create(req.body)
-	res.json(transaction)
+	try {
+		const transaction = await Transaction.create(req.body)
+		res.json(transaction)
+	} catch (errorOnPOSTRoute) {
+		console.log({ errorOnPOSTRoute })
+		res.json({ errorOnPOSTRoute })
+	}
 })
 
 router.put('/:transactionID', async (req, res) => {
-	await Transaction.update(req.body, {
-		where: { id: req.params.transactionID },
-	})
-	let updated = await Transaction.findByPk(req.params.transactionID)
-	res.json(updated)
+	try {
+		await Transaction.update(req.body, {
+			where: { id: req.params.transactionID },
+		})
+		let updated = await Transaction.findByPk(req.params.transactionID)
+		res.json(updated)
+	} catch (errorOnPUTRoute) {
+		console.log({ errorOnPUTRoute })
+		res.json({ errorOnPUTRoute })
+	}
 })
 
 router.delete('/:transactionID', async (req, res) => {
-	await Transaction.destroy({
-		where: { id: req.params.transactionID },
-	})
+	try {
+		await Transaction.destroy({
+			where: { id: req.params.transactionID },
+		})
 
-	res.json({
-		success: `Se ha borrado de la tabla el elemento con ID: ${req.params.transactionID}`,
-	})
+		res.json({
+			success: `Se ha borrado de la tabla el elemento con ID: ${req.params.transactionID}`,
+		})
+	} catch (errorOnDELETERoute) {
+		console.log({ errorOnDELETERoute })
+		res.json({ errorOnDELETERoute })
+	}
 })
 
 module.exports = router
