@@ -4,7 +4,8 @@
 
 [clone this repo](https://github.com/juanjparedez/challenge_backend.git)
 
-notes: You will need a SQL server running in which you will have to create a database called "cashflow" and configure the .env file with the data of the mentioned server
+notes: You will need a SQL server running in which you will have to create a database called "cashflow" and configure the .env file with the data of the mentioned server.
+
 You will also need the Frontend:
 to do it [clone this repo](https://github.com/juanjparedez/challenge_frontend.git):
 
